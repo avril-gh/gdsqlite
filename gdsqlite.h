@@ -2,10 +2,10 @@
 #ifndef GDSQLITE_H
 #define GDSQLITE_H
 
-#include "reference.h"
-#include "ustring.h"
+#include "core/reference.h"
+#include "core/ustring.h"
 
-#include "map.h"
+#include "core/map.h"
 #include "sqlite/sqlite3.h"
 
 class SQLite : public Reference {

@@ -1,22 +1,21 @@
 /* gdsqlite.cpp */
 
 #include "gdsqlite.h"
-#include "globals.h"
-#include "os/os.h"
+#include "core/os/os.h"
 
 SQLite::SQLite() {
 }
 
 int SQLite::open(String path) {
 	if (path.begins_with("res://")) {
-		if (GlobalConfig::get_singleton()) {
-			String resource_path = GlobalConfig::get_singleton()->get_resource_path();
+		if (OS::get_singleton()) {
+			String resource_path = OS::get_singleton()->get_resource_dir();
 			if (resource_path != "") path = path.replace("res:/",resource_path);
 			else path = path.replace("res://", "");
 		}
 	}
 	else if (path.begins_with("user://")) {
-		String data_dir=OS::get_singleton()->get_data_dir();
+		String data_dir=OS::get_singleton()->get_user_data_dir();
 		if (data_dir != "") path = path.replace("user:/",data_dir);
 		else path = path.replace("user://", "");
 	}
@@ -70,7 +69,7 @@ Array SQLite::fetch_assoc() {
 
 Array SQLite::fetch_one() {
 	Array result = fetch_assoc();
-	if (result.size() <= 0) { return NULL; }
+	if (result.size() <= 0) { return result[0]; }
 	return result[0];
 }
 
